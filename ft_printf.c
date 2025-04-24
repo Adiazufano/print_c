@@ -6,194 +6,82 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:10:24 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/23 17:19:43 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:42:59 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libtprintf.h"
 
-void	ft_print_str(char const *str, va_list args)
+static int	ft_handle_format(char type, va_list args, int *count)
 {
-	char	*s;
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (type == 's')
+		ft_print_str(args, count);
+	else if (type == 'i' || type == 'd')
+		ft_print_int(args, count, type);
+	else if (type == 'u')
+		ft_unsigned_int(args, count);
+	else if (type == 'c')
+		ft_print_char(args, count);
+	else if (type == 'x' || type == 'X')
+		ft_putnbr_hex(va_arg(args, unsigned int), count, type);
+	else if (type == 'p')
+		ft_print_ptr(args, count);
+	else if (type == '%')
 	{
-		if (str[i] == '%' && str[i + 1] == 's')
-		{
-			s = va_arg(args, char *);
-			ft_putstr_fd(s, 1);
-		}
-		i++;
+		ft_putchar_fd('%', 1);
+		(*count)++;
 	}
+	else
+		return (0);
+	return (1);
 }
-void	ft_print_char(char const *str, va_list args)
-{
-	char	c;
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '%' && str[i + 1] == 'c')
-		{
-			c = va_arg(args, char);
-			ft_putchar_fd(c, 1);
-		}
-		i++;
-	}
-}
-void	ft_print_int(char const *str, va_list args)
-{
-	int	num;
-	int	i;
-	char	*s;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '%' && str[i + 1] == 'i')
-		{
-			num = va_arg(args, int);
-			s = ft_itoa(num);
-			ft_putstr_fd(s, 1);
-			free(s);
-		}
-		i++;
-	}
-}
-void	ft_unsigned_int(char const *str, va_list args)
-{
-	int	num;
-	int	i;
-	char	*s;
-
-	i = 0;
-	num = va_arg(args, int);
-	if (num < 0)
-		num = -num;
-	while (str[i])
-	{
-		if (str[i] == '%' && str[i + 1] == 'u')
-		{
-			s = ft_itoa(num);
-			ft_putstr_fd(s, 1);
-			free(s);
-		}
-		i++;
-	}
-}
-void	ft_print_porcentaje(char const *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '%' && str[i + 1] == '%')
-			ft_putchar_fd('%', 1);
-		i++;
-	}
-}
-void	ft_print_hexadecima(va_list args, char type)
-{
-	int	num;
-	int i;
-	char	hex[9];
-
-	num = va_arg(args, unsigned int);
-	i = 0;
-	if (num == 0)
-	{
-		ft_putchar_fd('0', 1);
-		return;
-	}
-	while (num > 0)
-	{
-		if (num % 16 < 10)
-			hex[i] = (num % 16) + '0';
-		else if (type == 'x')
-			hex[i] = (num % 16) - 10 + 'a';
-		else if	(type == 'X')
-			hex[i] = (num % 16) - 10 + 'A';
-		num /= 16;
-		i++;
-	}
-	while (--i >= 0)
-		ft_putchar_fd(hex[i], 1);
-	
-}
-
-void	ft_print_ptr(va_list args)
-{
-	long	num;
-	long i;
-	char	hex[17];
-
-	num = va_arg(args, unsigned long);
-	i = 0;
-	if (num == 0)
-	{
-		ft_putchar_fd('0', 1);
-		return;
-	}
-	while (num > 0)
-	{
-		if (num % 16 < 10)
-			hex[i] = (num % 16) + '0';
-		else
-			hex[i] = (num % 16) - 10 + 'a';
-		num /= 16;
-		i++;
-	}
-	ft_putstr_fd("0x",1);
-	while (--i >= 0)
-		ft_putchar_fd(hex[i], 1);
-}
-
 int	ft_printf(char const *str, ...)
 {
 	va_list	args;
-	va_start(args, str);
-	int	i;
+	int		i;
+	int		count;
 
+	va_start(args, str);
 	i = 0;
+	count = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
 			i++;
-			if (str[i] == 's')
-				ft_print_str(str, args);
-			if (str[i] == 'i')
-				ft_print_int(str,args);
-			if (str[i] == 'c')
-				ft_print_char(str, args);
-			if (str[i] == 'u')
-				ft_unsigned_int(str, args);
-			if (str[i] == '%')
-				ft_print_porcentaje(str);
-			if (str[i] == 'x')
-				ft_print_hexadecima(args, 'x');
-			if (str[i] == 'X')
-				ft_print_hexadecima(args, 'X');
-			if (str[i] == 'p')
-				ft_print_ptr(args);
+			if (!ft_handle_format(str[i], args, &count))
+				continue ;
 		}
 		else
+		{
 			ft_putchar_fd(str[i], 1);
+			count++;
+		}
 		i++;
 	}
 	va_end(args);
-	return (0);
+	return (count);
 }
 
-int	main()
+int	main(void)
 {
-	int x = 10;
-	int *ptr = &x;
-	ft_printf("Hola %s que tal %i kdkkhadk %c tengo :%u años? %% %x %X", "Alberto", 3, 'k', -20, 255, 25);
-	ft_printf("\n%p\n",&ptr);
-	return(0);
+	int	x;
+	int	*ptr;
+	int	i;
+
+	x = 10;
+	ptr = &x;
+	// Casos de prueba individuales
+	ft_printf("String: %s\n", "Hola");
+	ft_printf("Char: %c\n", 'A');
+	ft_printf("Integer: %d\n", 42);
+	i = ft_printf("Unsigned: %u\n", -4294967295);
+	ft_printf("Hex (lower): %x\n", 255);
+	ft_printf("Hex (upper): %X\n", -255);
+	ft_printf("Pointer: %p\n", ptr);
+	ft_printf("Literal %%: %%\n");
+	// Prueba combinada
+	ft_printf("Combinado: %s %d %u %x %p %%\n", "Hola", -123, -456, 255, ptr);
+	ft_printf("%i", i);
+	return (0);
 }
