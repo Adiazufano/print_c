@@ -6,7 +6,7 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:15:46 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/25 11:26:00 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:11:08 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_print_str(va_list args, int *count)
 	char	*s;
 
 	s = va_arg(args, char *);
-	if (!args || !count)
-		return ;
 	if (!s)
 	{
 		ft_putstr_fd("(null)", 1);
