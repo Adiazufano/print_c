@@ -6,18 +6,22 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:21:30 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/25 10:11:51 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:05:29 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 void	ft_putnbr_hex(unsigned long num, int *count, char type)
 {
 	char	*base;
 
-	if (!num || !count || !type)
+	if (num == 0)
+	{
+		ft_putnbr_fd(0, 1);
+		(*count)++;
 		return ;
+	}
 	if (num >= 16)
 		ft_putnbr_hex(num / 16, count, type);
 	if (type == 'X')

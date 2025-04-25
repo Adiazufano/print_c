@@ -6,12 +6,12 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:28:26 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/25 10:24:34 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:12:56 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 # include <stdarg.h>
 # include "libft/libft.h"
 

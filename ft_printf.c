@@ -6,16 +6,14 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:10:24 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/25 10:23:23 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:43:08 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static int	ft_handle_format(char type, va_list args, int *count)
 {
-	if (!type || !args || !count)
-		return (0);
 	if (type == 's')
 		ft_print_str(args, count);
 	else if (type == 'i' || type == 'd')
@@ -65,3 +63,10 @@ int	ft_printf(char const *str, ...)
 	va_end(args);
 	return (count);
 }
+
+// int	main()
+// {
+// 	//printf("%x", 0);
+// 	ft_printf("%X", 0);
+// 	return (0);
+// }

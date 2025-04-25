@@ -6,11 +6,11 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:22:47 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/25 10:11:42 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:16:00 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 void	ft_print_ptr(va_list args, int *count)
 {
@@ -21,8 +21,8 @@ void	ft_print_ptr(va_list args, int *count)
 	num = va_arg(args, unsigned long);
 	if (num == 0)
 	{
-		ft_putstr_fd("0x0", 1);
-		(*count) += 3;
+		ft_putstr_fd("(nil)", 1);
+		(*count) += 5;
 		return ;
 	}
 	ft_putstr_fd("0x", 1);
