@@ -6,7 +6,7 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:10:24 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/24 19:42:59 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 09:16:29 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	ft_handle_format(char type, va_list args, int *count)
 		return (0);
 	return (1);
 }
+
 int	ft_printf(char const *str, ...)
 {
 	va_list	args;
@@ -73,9 +74,9 @@ int	main(void)
 	ptr = &x;
 	// Casos de prueba individuales
 	ft_printf("String: %s\n", "Hola");
-	ft_printf("Char: %c\n", 'A');
+	i = ft_printf("Char: %c\n", 'A');
 	ft_printf("Integer: %d\n", 42);
-	i = ft_printf("Unsigned: %u\n", -4294967295);
+	ft_printf("Unsigned: %u\n", -20);
 	ft_printf("Hex (lower): %x\n", 255);
 	ft_printf("Hex (upper): %X\n", -255);
 	ft_printf("Pointer: %p\n", ptr);
