@@ -6,14 +6,16 @@
 /*   By: aldiaz-u <aldiaz-u@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:10:24 by aldiaz-u          #+#    #+#             */
-/*   Updated: 2025/04/25 09:16:29 by aldiaz-u         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:23:23 by aldiaz-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libtprintf.h"
+#include "libftprintf.h"
 
 static int	ft_handle_format(char type, va_list args, int *count)
 {
+	if (!type || !args || !count)
+		return (0);
 	if (type == 's')
 		ft_print_str(args, count);
 	else if (type == 'i' || type == 'd')
@@ -62,27 +64,4 @@ int	ft_printf(char const *str, ...)
 	}
 	va_end(args);
 	return (count);
-}
-
-int	main(void)
-{
-	int	x;
-	int	*ptr;
-	int	i;
-
-	x = 10;
-	ptr = &x;
-	// Casos de prueba individuales
-	ft_printf("String: %s\n", "Hola");
-	i = ft_printf("Char: %c\n", 'A');
-	ft_printf("Integer: %d\n", 42);
-	ft_printf("Unsigned: %u\n", -20);
-	ft_printf("Hex (lower): %x\n", 255);
-	ft_printf("Hex (upper): %X\n", -255);
-	ft_printf("Pointer: %p\n", ptr);
-	ft_printf("Literal %%: %%\n");
-	// Prueba combinada
-	ft_printf("Combinado: %s %d %u %x %p %%\n", "Hola", -123, -456, 255, ptr);
-	ft_printf("%i", i);
-	return (0);
 }
